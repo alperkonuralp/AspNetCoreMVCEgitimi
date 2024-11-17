@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AspNetCoreBlog.Models.PostListModelDto
+@{
     ViewData["Title"] = "Anasayfa";
 }
 
@@ -8,22 +9,14 @@
     <hr />
 
     <div class="blog-posts">
-        <div class="blog-post">
-            <h2>Blog Yazısı 1</h2>
-            <p>Bu, ilk blog yazısının içeriğidir. Asp.Net Core MVC hakkında temel bilgiler içerir.</p>
-            <a asp-action="Index" asp-controller="Post" asp-route-id="1">Devamını oku...</a>
-        </div>
-        <hr />
-        <div class="blog-post">
-            <h2>Blog Yazısı 2</h2>
-            <p>Bu, ikinci blog yazısının içeriğidir. Asp.Net Core MVC ile ilgili ileri seviye konulara değinir.</p>
-            <a asp-action="Index" asp-controller="Post" asp-route-id="2">>Devamını oku...</a>
-        </div>
-        <hr />
-        <div class="blog-post">
-            <h2>Blog Yazısı 3</h2>
-            <p>Bu, üçüncü blog yazısının içeriğidir. Asp.Net Core MVC projelerinde performans optimizasyonu hakkında bilgiler sunar.</p>
-            <a asp-action="Index" asp-controller="Post" asp-route-id="3">Devamını oku...</a>
-        </div>
+        @foreach (var item in Model.PagePosts)
+        {
+            <div class="blog-post">
+                <h2>@item.Title</h2>
+                <p>@item.Summary</p>
+                <a asp-action="Index" asp-controller="Post" asp-route-id="@item.Id">Devamını oku...</a>
+            </div>
+            <hr />
+        }
     </div>
 </div>

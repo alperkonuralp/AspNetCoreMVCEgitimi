@@ -1,18 +1,18 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model AspNetCoreBlog.Models.PostDetailDto
 
 @{
-    ViewData["Title"] = "Blog Yazısı 1";
+    ViewData["Title"] = $"{Model.Title} - {Model.Author}";
 }
 
 <div class="blog-post-detail">
-    <h1>Blog Yazısı 1</h1>
-    <p class="post-date">Yayınlanma Tarihi: 01 Ocak 2023</p>
-    <section class="blog-post-summary">Bu, ilk blog yazısının içeriğidir. Asp.Net Core MVC hakkında temel bilgiler içerir.</section>
+    <h1>@Model.Title</h1>
+    <p class="post-date">Yayınlanma Tarihi: @Model.PublishDateTime.ToString("G")</p>
+    <section class="blog-post-summary">@Model.Summary</section>
     <section class="blog-post-content">
-        <p>Bu, ilk blog yazısının detaylı içeriğidir. Asp.Net Core MVC hakkında temel bilgiler içerir. Bu yazıda, Asp.Net Core MVC'nin temel kavramları, projelerin nasıl oluşturulacağı ve yapılandırılacağı hakkında bilgiler bulabilirsiniz.</p>
-        <p>Ayrıca, Asp.Net Core MVC'nin avantajları ve dezavantajları, diğer web geliştirme teknolojileri ile karşılaştırmaları gibi konulara da değinilmektedir.</p>
+        @Model.HtmlContent
     </section>
     <a href="/Home/Index" class="btn btn-primary">Geri Dön</a>
 </div>
