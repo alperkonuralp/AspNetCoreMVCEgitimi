@@ -1,22 +1,25 @@
-﻿using AspNetCoreBlog.Models;
-using System.Globalization;
+﻿using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
+using System.Globalization; // Kültür bilgisi ve tarih saat işlemleri için
 
 namespace AspNetCoreBlog.Services
 {
+    // Post işlemleri için hizmet sınıfı
     public class PostService : IPostService
     {
+        // İngilizce kültür bilgisini tanımlar (tarih ve saat formatları için)
         private static readonly CultureInfo CultureEn = new CultureInfo("en-US");
 
+        // Tüm blog gönderilerini depolayan statik bir liste
         private static readonly List<Post> _posts = new List<Post>
         {
             new Post
             {
                 Id = 1,
-                Title = "İlk Blog Yazım",
-                Summary = "Blog yazmaya başladığım ilk yazım.",
-                Content = "~/BlogPostContents/P_1.md",
-                Author = "Ahmet Yılmaz",
-                PublishDateTime = DateTimeOffset.Parse("2024-02-15T03:45:56.812+0300", CultureEn, DateTimeStyles.AssumeUniversal)
+                Title = "İlk Blog Yazım", // Gönderinin başlığı
+                Summary = "Blog yazmaya başladığım ilk yazım.", // Gönderinin özeti
+                Content = "~/BlogPostContents/P_1.md", // Gönderi içeriğinin bulunduğu dosya yolu
+                Author = "Ahmet Yılmaz", // Gönderinin yazarı
+                PublishDateTime = DateTimeOffset.Parse("2024-02-15T03:45:56.812+0300", CultureEn, DateTimeStyles.AssumeUniversal) // Yayınlanma tarihi ve saati
             },
             new Post
             {
@@ -110,14 +113,18 @@ namespace AspNetCoreBlog.Services
             }
         };
 
+        // Tüm gönderileri yayınlanma tarihine göre azalan sırada döner
         public List<Post> GetAll()
         {
-            return _posts;
+            return _posts
+                        .OrderByDescending(x => x.PublishDateTime) // Gönderileri yayınlanma tarihine göre sırala
+                        .ToList(); // Sonuçları liste olarak döndür
         }
 
+        // Belirli bir ID'ye sahip gönderiyi bulur
         public Post? GetById(int id)
         {
-            return _posts.Find(x => x.Id == id);
+            return _posts.Find(x => x.Id == id); // ID'ye göre gönderiyi bul
         }
     }
 }
