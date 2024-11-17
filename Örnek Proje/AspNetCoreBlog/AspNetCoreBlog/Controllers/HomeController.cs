@@ -18,7 +18,16 @@ namespace AspNetCoreBlog.Controllers
 
         public IActionResult Index()
         {
-            var posts = _postService.GetAll();
+            var posts = _postService.GetAll()
+                .ConvertAll(x => new PostListDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Summary = x.Summary,
+                    Author = x.Author,
+                    PublishDateTime = x.PublishDateTime
+                });
+
             return View(posts);
         }
 

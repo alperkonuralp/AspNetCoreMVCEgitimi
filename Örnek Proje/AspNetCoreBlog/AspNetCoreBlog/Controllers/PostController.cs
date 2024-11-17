@@ -1,4 +1,5 @@
-﻿using AspNetCoreBlog.Services;
+﻿using AspNetCoreBlog.Models;
+using AspNetCoreBlog.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreBlog.Controllers
@@ -12,7 +13,6 @@ namespace AspNetCoreBlog.Controllers
             _postService = postService;
         }
 
-        //[HttpGet("{id}")]
         public IActionResult Index(int id)
         {
             if (!ModelState.IsValid)
@@ -27,7 +27,15 @@ namespace AspNetCoreBlog.Controllers
                 return NotFound();
             }
 
-            return View(post);
+            return View(new PostDetailDto
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Summary = post.Summary,
+                HtmlContent = Markdig.Markdown.ToHtml(post.Content),
+                Author = post.Author,
+                PublishDateTime = post.PublishDateTime
+            });
         }
     }
 }

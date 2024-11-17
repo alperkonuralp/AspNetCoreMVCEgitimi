@@ -1,6 +1,6 @@
 ﻿namespace AspNetCoreBlog.Models
 {
-    public class Post
+    public class PostDetailDto
     {
         public int Id { get; set; }
 
@@ -8,10 +8,10 @@
 
         public string Summary { get; set; }
 
-        public string Content { get; set; }
+        public string HtmlContent { get; set; }
 
         public string Author { get; set; }
 
-        public DateTimeOffset PublishDateTime { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset PublishDateTime { get; set; }
     }
 }
