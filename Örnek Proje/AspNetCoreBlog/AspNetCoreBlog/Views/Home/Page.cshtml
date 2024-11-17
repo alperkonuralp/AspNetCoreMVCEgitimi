@@ -8,30 +8,7 @@
     <hr />
     <h2> Sayfa @Model.PageIndex </h2>
 
-    <div class="blog-posts">
-        @foreach (var item in Model.PagePosts)
-        {
-            <div class="blog-post">
-                <h2>@item.Title</h2>
-                <p>@item.Summary</p>
-                <div> Yazan: @item.Author - <a asp-action="Index" asp-controller="Post" asp-route-id="@item.Id" class="btn btn-link">Devamını oku...</a></div>
-            </div>
-            <hr />
-        }
-
-        @if (Model.TotalPageCount > 1)
-        {
-            <nav aria-label="Sayfalama Örneği">
-                <ul class="pagination">
-                    @for (int i = 1; i <= Model.TotalPageCount; i++)
-                    {
-                        <li class="page-item @(Model.PageIndex == i ? "active" : "")">
-                            <a class="page-link" asp-controller="Home" asp-action="Page" asp-route-pageIndex="@i">@i</a>
-                        </li>
-                    }
-                </ul>
-            </nav>
-        }
-    </div>
+    @* Partial View'ı çağırıyoruz *@
+    @await Html.PartialAsync("_BlogPosts", Model)
 
 </div>
