@@ -7,7 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ColorCode" Version="1.0.1" />
     <PackageReference Include="Markdig" Version="0.38.0" />
+    <PackageReference Include="Markdig.SyntaxHighlighting" Version="1.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BlogPostContents\P_1.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BlogPostContents\P_2.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BlogPostContents\P_3.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BlogPostContents\P_4.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BlogPostContents\P_5.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

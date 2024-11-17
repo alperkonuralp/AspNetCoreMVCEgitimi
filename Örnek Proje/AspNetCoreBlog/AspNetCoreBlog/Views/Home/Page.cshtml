@@ -1,12 +1,12 @@
 ﻿@model AspNetCoreBlog.Models.PostListModelDto
 @{
-    ViewData["Title"] = "Anasayfa";
+    ViewData["Title"] = "Sayfa " + Model.PageIndex;
 }
 
 <div class="text-center">
     <h1 class="display-4">Asp.Net Core Blog Sayfamıza Hoşgeldiniz.</h1>
-    <p>Bu sitede Asp.Net Core MVC ile geliştirilmiş bir Blog örneğini bulabilirsiniz. Bu örnek Asp.Net Core MVC ile ilgili eğitim için hazırlanmış olup eğitim dokümanlarına <a href="https://github.com/alperkonuralp/AspNetCoreMVCEgitimi">Github</a> üzerinden erişebilirsiniz.</p>
     <hr />
+    <h2> Sayfa @Model.PageIndex </h2>
 
     <div class="blog-posts">
         @foreach (var item in Model.PagePosts)
@@ -33,4 +33,5 @@
             </nav>
         }
     </div>
+
 </div>

@@ -10,10 +10,11 @@
 <div class="blog-post-detail">
     <h1>@Model.Title</h1>
     <p class="post-date">Yayınlanma Tarihi: @Model.PublishDateTime.ToString("G")</p>
+    <p class="post-author">Yazar: @Model.Author</p>
     <section class="blog-post-summary">@Model.Summary</section>
     <section class="blog-post-content">
-        @Model.HtmlContent
+        @Html.Raw(Model.HtmlContent)
     </section>
-    <a href="/Home/Index" class="btn btn-primary">Geri Dön</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Geri Dön</a>
 </div>
 

@@ -1,6 +1,7 @@
 ﻿using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
 using AspNetCoreBlog.Services; // Blog servislerini kullanmak için
 using Markdig; // Markdown içeriğini HTML'e dönüştürmek için
+using Markdig.SyntaxHighlighting;
 using Microsoft.AspNetCore.Mvc; // ASP.NET Core MVC özelliklerini kullanmak için
 
 namespace AspNetCoreBlog.Controllers
@@ -44,13 +45,19 @@ namespace AspNetCoreBlog.Controllers
                 content = System.IO.File.ReadAllText(content.Substring(2));
             }
 
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .UseSyntaxHighlighting() // Sözdizimi vurgulama genişletmesi
+                .Build();
+
+
             // Markdown içeriğini HTML'e dönüştürür ve PostDetailDto oluşturur
             return View(new PostDetailDto
             {
                 Id = post.Id, // Postun ID'si
                 Title = post.Title, // Postun başlığı
                 Summary = post.Summary, // Postun özeti
-                HtmlContent = Markdown.ToHtml(content), // Markdown'dan dönüştürülmüş HTML içeriği
+                HtmlContent = Markdown.ToHtml(content, pipeline), // Markdown'dan dönüştürülmüş HTML içeriği
                 Author = post.Author, // Postun yazarı
                 PublishDateTime = post.PublishDateTime // Yayınlanma tarihi ve saati
             });
