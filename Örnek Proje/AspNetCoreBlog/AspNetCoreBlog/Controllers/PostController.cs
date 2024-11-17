@@ -1,12 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreBlog.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreBlog.Controllers
 {
     public class PostController : Controller
     {
-        public IActionResult Index()
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
         {
-            return View();
+            _postService = postService;
+        }
+
+        //[HttpGet("{id}")]
+        public IActionResult Index(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var post = _postService.GetById(id);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
         }
     }
 }

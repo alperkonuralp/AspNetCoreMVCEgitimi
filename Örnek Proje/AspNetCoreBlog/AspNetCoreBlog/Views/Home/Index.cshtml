@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Anasayfa";
 }
 
 <div class="text-center">
@@ -11,19 +11,19 @@
         <div class="blog-post">
             <h2>Blog Yazısı 1</h2>
             <p>Bu, ilk blog yazısının içeriğidir. Asp.Net Core MVC hakkında temel bilgiler içerir.</p>
-            <a asp-action="Index" asp-controller="Post">Devamını oku...</a>
+            <a asp-action="Index" asp-controller="Post" asp-route-id="1">Devamını oku...</a>
         </div>
         <hr />
         <div class="blog-post">
             <h2>Blog Yazısı 2</h2>
             <p>Bu, ikinci blog yazısının içeriğidir. Asp.Net Core MVC ile ilgili ileri seviye konulara değinir.</p>
-            <a href="#">Devamını oku...</a>
+            <a asp-action="Index" asp-controller="Post" asp-route-id="2">>Devamını oku...</a>
         </div>
         <hr />
         <div class="blog-post">
             <h2>Blog Yazısı 3</h2>
             <p>Bu, üçüncü blog yazısının içeriğidir. Asp.Net Core MVC projelerinde performans optimizasyonu hakkında bilgiler sunar.</p>
-            <a href="#">Devamını oku...</a>
+            <a asp-action="Index" asp-controller="Post" asp-route-id="3">Devamını oku...</a>
         </div>
     </div>
 </div>

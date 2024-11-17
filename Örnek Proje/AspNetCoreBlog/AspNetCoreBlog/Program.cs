@@ -1,3 +1,5 @@
+using AspNetCoreBlog.Services;
+
 namespace AspNetCoreBlog
 {
     public class Program
@@ -8,6 +10,8 @@ namespace AspNetCoreBlog
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddTransient<IPostService, PostService>();
 
             var app = builder.Build();
 
