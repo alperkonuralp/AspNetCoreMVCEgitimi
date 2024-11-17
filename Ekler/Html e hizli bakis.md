@@ -1,4 +1,4 @@
-# HTML'e Hızlı Bakış
+﻿# HTML'e Hızlı Bakış
 
 ### Giriş Yazısı
 

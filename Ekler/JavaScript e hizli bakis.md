@@ -1,2 +1,2 @@
-# JavaScript'e Hızlı Bakış
+﻿# JavaScript'e Hızlı Bakış
 

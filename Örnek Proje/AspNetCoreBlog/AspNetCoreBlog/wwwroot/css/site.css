@@ -20,3 +20,45 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.blog-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.blog-post {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+  padding: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+  .blog-post:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+
+.blog-post-detail {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+  .blog-post-detail .post-date {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+
+  .blog-post-detail .blog-post-summary {
+    background-color: #e9ecef;
+    border-left: 4px solid #007bff;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }

@@ -1,4 +1,4 @@
-# CSS'e Hızlı Bakış
+﻿# CSS'e Hızlı Bakış
 
 Modern web geliştirme dünyasında kullanıcı arayüzlerinin estetik, işlevsel ve erişilebilir bir şekilde tasarlanması kritik bir öneme sahiptir. Bu hedefe ulaşmanın temel araçlarından biri de CSS'tir. Cascading Style Sheets (CSS), bir web sayfasının görünümünü şekillendiren ve düzenleyen güçlü bir stil dilidir. HTML ile yapılandırılmış bir sayfayı, CSS ile zengin ve profesyonel bir görünüme dönüştürmek mümkündür. Bu makalede, CSS'in ne olduğunu ve web geliştirmedeki yerini ele alacak, CSS’in temel kavramlarını ve tekniklerini kısa ve öz bir şekilde inceleyeceğiz.
 
