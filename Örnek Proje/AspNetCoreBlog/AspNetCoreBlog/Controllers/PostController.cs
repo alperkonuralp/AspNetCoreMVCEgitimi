@@ -1,5 +1,6 @@
 ﻿using AspNetCoreBlog.Models;
 using AspNetCoreBlog.Services;
+using Markdig;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreBlog.Controllers
@@ -27,12 +28,18 @@ namespace AspNetCoreBlog.Controllers
                 return NotFound();
             }
 
+            var content = post.Content;
+            if (content.StartsWith("~/"))
+            {
+                content = System.IO.File.ReadAllText(content.Substring(2));
+            }
+
             return View(new PostDetailDto
             {
                 Id = post.Id,
                 Title = post.Title,
                 Summary = post.Summary,
-                HtmlContent = Markdig.Markdown.ToHtml(post.Content),
+                HtmlContent = Markdown.ToHtml(content),
                 Author = post.Author,
                 PublishDateTime = post.PublishDateTime
             });
