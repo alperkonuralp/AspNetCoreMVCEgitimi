@@ -1,6 +1,6 @@
 ﻿namespace AspNetCoreBlog.Models
 {
-    public class PostListModelDto
+    public class PostListModelViewModel
     {
         public int PostCount { get; set; }
 
@@ -10,7 +10,7 @@
 
         public int TotalPageCount => (PostCount + PageSize - 1) / PageSize;
 
-        public IEnumerable<PostListDto> PagePosts { get; set; }
+        public IEnumerable<PostListViewModel> PagePosts { get; set; }
 
     }
 }

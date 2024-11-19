@@ -1,5 +1,5 @@
 ﻿using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
-using System.Globalization; // Kültür bilgisi ve tarih saat işlemleri için
+using System.Globalization;
 
 namespace AspNetCoreBlog.Services
 {
@@ -112,6 +112,14 @@ namespace AspNetCoreBlog.Services
                 PublishDateTime = DateTimeOffset.Parse("2024-11-05T04:07:17.812+0300", CultureEn, DateTimeStyles.AssumeUniversal)
             }
         };
+
+        public Task CreateAsync(Post post)
+        {
+            var maxId = _posts.Max(x => x.Id); // En büyük ID'yi alır
+            post.Id = maxId + 1; // Yeni ID'yi belirler
+            _posts.Add(post); // Yeni gönderiyi listeye ekler
+            return Task.CompletedTask; // Görevi tamamlar
+        }
 
         // Tüm gönderileri yayınlanma tarihine göre azalan sırada döner
         public List<Post> GetAll()

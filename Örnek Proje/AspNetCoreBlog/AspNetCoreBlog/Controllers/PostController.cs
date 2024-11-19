@@ -50,9 +50,8 @@ namespace AspNetCoreBlog.Controllers
                 .UseSyntaxHighlighting() // Sözdizimi vurgulama genişletmesi
                 .Build();
 
-
             // Markdown içeriğini HTML'e dönüştürür ve PostDetailDto oluşturur
-            return View(new PostDetailDto
+            return View(new PostDetailViewModel
             {
                 Id = post.Id, // Postun ID'si
                 Title = post.Title, // Postun başlığı

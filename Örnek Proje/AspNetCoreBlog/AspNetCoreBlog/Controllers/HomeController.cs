@@ -24,7 +24,7 @@ namespace AspNetCoreBlog.Controllers
         public IActionResult Index()
         {
             // Ýlk sayfa verilerini alýr
-            PostListModelDto posts = GetDataForPage(1);
+            PostListModelViewModel posts = GetDataForPage(1);
 
             // Görünüme post verilerini gönderir
             return View(posts);
@@ -42,25 +42,25 @@ namespace AspNetCoreBlog.Controllers
             }
 
             // Ýstenen sayfanýn verilerini alýr
-            PostListModelDto posts = GetDataForPage(pageIndex);
+            PostListModelViewModel posts = GetDataForPage(pageIndex);
 
             // Görünüme post verilerini gönderir
             return View(posts);
         }
 
         // Belirli bir sayfanýn verilerini almak için yardýmcý metot
-        private PostListModelDto GetDataForPage(int pageIndex)
+        private PostListModelViewModel GetDataForPage(int pageIndex)
         {
             // Tüm postlarý alýr
             var posts = _postService.GetAll();
 
             // Post listesi modelini baþlatýr
-            var result = new PostListModelDto
+            var result = new PostListModelViewModel
             {
                 PageIndex = pageIndex,
                 PageSize = 3, // Sayfa baþýna 3 post gösterilir
                 PostCount = 0,
-                PagePosts = new List<PostListDto>()
+                PagePosts = new List<PostListViewModel>()
             };
 
             // Eðer hiç post yoksa boþ sonuç döner
@@ -91,7 +91,7 @@ namespace AspNetCoreBlog.Controllers
 
             // Postlarý DTO nesnelerine dönüþtürür
             result.PagePosts = posts
-                .ConvertAll(x => new PostListDto
+                .ConvertAll(x => new PostListViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,

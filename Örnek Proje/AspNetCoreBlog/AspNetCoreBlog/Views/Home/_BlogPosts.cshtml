@@ -1,10 +1,10 @@
-﻿@model AspNetCoreBlog.Models.PostListModelDto
+﻿@model AspNetCoreBlog.Models.PostListModelViewModel
 
 <div class="blog-posts">
     @foreach (var item in Model.PagePosts)
     {
         <div class="blog-post">
-            <h2>@item.Title</h2>
+            <h2>@item.Title <a asp-action="Index" asp-controller="PostEdit" asp-route-id="@item.Id"><i class="bi bi-pen"></i></a></h2>
             <p>@item.Summary</p>
             <div>
                 Yazan: @item.Author -
