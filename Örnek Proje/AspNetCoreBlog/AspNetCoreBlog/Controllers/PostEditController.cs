@@ -17,19 +17,19 @@ namespace AspNetCoreBlog.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Index([FromRoute] int id, [FromQuery] bool? isSuccess)
+        public async Task<IActionResult> Index([FromRoute] int id, [FromQuery] bool? isSuccess)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(isSuccess.HasValue && isSuccess.Value)
+            if (isSuccess.HasValue && isSuccess.Value)
             {
                 ViewBag.IsSuccess = true;
             }
 
-            var post = _postService.GetById(id);
+            var post = await _postService.GetByIdAsync(id);
 
             if (post == null)
             {
@@ -41,7 +41,7 @@ namespace AspNetCoreBlog.Controllers
             if (content.StartsWith("~/"))
             {
                 // Dosya yolundan ilk iki karakteri kaldırır ve dosyayı okur
-                content = System.IO.File.ReadAllText(content.Substring(2));
+                content = await System.IO.File.ReadAllTextAsync(content.Substring(2));
             }
 
             var pipeline = new MarkdownPipelineBuilder()
@@ -70,7 +70,7 @@ namespace AspNetCoreBlog.Controllers
                 return BadRequest(ModelState);
             }
 
-            var post = _postService.GetById(model.Id);
+            var post = await _postService.GetByIdAsync(model.Id);
 
             if (post == null)
             {

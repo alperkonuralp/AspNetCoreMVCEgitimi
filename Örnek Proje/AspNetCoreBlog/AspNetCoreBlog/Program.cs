@@ -1,4 +1,6 @@
+using AspNetCoreBlog.Data;
 using AspNetCoreBlog.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreBlog
 {
@@ -10,6 +12,10 @@ namespace AspNetCoreBlog
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Add DbContext
+            builder.Services.AddDbContext<BlogDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("LocalDb")));
 
             builder.Services.AddTransient<IPostService, PostService>();
 

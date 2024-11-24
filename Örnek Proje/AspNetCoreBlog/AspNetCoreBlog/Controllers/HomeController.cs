@@ -21,7 +21,7 @@ namespace AspNetCoreBlog.Controllers
 
         // Ana sayfa isteğini karşılayan GET metodu
         [HttpGet("")]
-        public IActionResult Index([FromQuery] bool? isDeleteSucceeded)
+        public async Task<IActionResult> Index([FromQuery] bool? isDeleteSucceeded)
         {
             if (!ModelState.IsValid)
             {
@@ -33,13 +33,13 @@ namespace AspNetCoreBlog.Controllers
                 ViewBag.IsDeleteSucceeded = true;
             }
 
-            PostListModelViewModel posts = GetDataForPage(1);
+            PostListModelViewModel posts = await GetDataForPage(1);
             return View(posts);
         }
 
         // Belirli bir sayfa isteğini karşılayan GET metodu
         [HttpGet("page/{pageIndex:int}")]
-        public IActionResult Page(int pageIndex)
+        public async Task<IActionResult> Page(int pageIndex)
         {
             // Model durumunu kontrol eder
             if (!ModelState.IsValid)
@@ -49,17 +49,17 @@ namespace AspNetCoreBlog.Controllers
             }
 
             // İstenen sayfanın verilerini alır
-            PostListModelViewModel posts = GetDataForPage(pageIndex);
+            PostListModelViewModel posts = await GetDataForPage(pageIndex);
 
             // Görünüme post verilerini gönderir
             return View(posts);
         }
 
         // Belirli bir sayfanın verilerini almak için yardımcı metot
-        private PostListModelViewModel GetDataForPage(int pageIndex)
+        private async Task<PostListModelViewModel> GetDataForPage(int pageIndex)
         {
             // Tüm postları alır
-            var posts = _postService.GetAll();
+            var posts = await _postService.GetAllAsync();
 
             // Post listesi modelini başlatır
             var result = new PostListModelViewModel

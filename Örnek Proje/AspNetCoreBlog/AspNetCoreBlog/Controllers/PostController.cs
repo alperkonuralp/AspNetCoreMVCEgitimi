@@ -18,7 +18,7 @@ namespace AspNetCoreBlog.Controllers
         }
 
         // Belirli bir postu görüntülemek için Index metodu
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
             // Model durumunu kontrol eder
             if (!ModelState.IsValid)
@@ -28,7 +28,7 @@ namespace AspNetCoreBlog.Controllers
             }
 
             // Verilen ID'ye sahip postu alır
-            var post = _postService.GetById(id);
+            var post = await _postService.GetByIdAsync(id);
 
             // Post bulunamazsa 404 Not Found döner
             if (post == null)
@@ -42,7 +42,7 @@ namespace AspNetCoreBlog.Controllers
             if (content.StartsWith("~/"))
             {
                 // Dosya yolundan ilk iki karakteri kaldırır ve dosyayı okur
-                content = System.IO.File.ReadAllText(content.Substring(2));
+                content = await System.IO.File.ReadAllTextAsync(content.Substring(2));
             }
 
             var pipeline = new MarkdownPipelineBuilder()
