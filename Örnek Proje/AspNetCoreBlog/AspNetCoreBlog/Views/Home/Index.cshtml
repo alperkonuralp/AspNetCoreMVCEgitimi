@@ -8,6 +8,14 @@
     <p>Bu sitede Asp.Net Core MVC ile geliştirilmiş bir Blog örneğini bulabilirsiniz. Bu örnek Asp.Net Core MVC ile ilgili eğitim için hazırlanmış olup eğitim dokümanlarına <a href="https://github.com/alperkonuralp/AspNetCoreMVCEgitimi">Github</a> üzerinden erişebilirsiniz.</p>
     <hr />
 
+    @if (ViewBag.IsDeleteSucceeded ?? false)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Blog Post'u başarıyla silindi.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     @* Partial View'ı çağırıyoruz *@
     @await Html.PartialAsync("_BlogPosts", Model)
 </div>

@@ -1,95 +1,102 @@
-using AspNetCoreBlog.Models; // Blog uygulamasýnýn modellerini kullanmak için
-using AspNetCoreBlog.Services; // Blog servislerini kullanmak için
-using Microsoft.AspNetCore.Mvc; // ASP.NET Core MVC özelliklerini kullanmak için
-using System.Diagnostics; // Hata ayýklama ve izleme için
+using AspNetCoreBlog.Models; // Blog uygulamasÄ±nÄ±n modellerini kullanmak iÃ§in
+using AspNetCoreBlog.Services; // Blog servislerini kullanmak iÃ§in
+using Microsoft.AspNetCore.Mvc; // ASP.NET Core MVC Ã¶zelliklerini kullanmak iÃ§in
+using System.Diagnostics; // Hata ayÄ±klama ve izleme iÃ§in
 
 namespace AspNetCoreBlog.Controllers
 {
-    // Ana rota için denetleyici sýnýfý
+    // Ana rota iÃ§in denetleyici sÄ±nÄ±fÄ±
     [Route("")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger; // Günlük kaydý için logger
-        private readonly IPostService _postService; // Post servislerini kullanmak için
+        private readonly ILogger<HomeController> _logger; // GÃ¼nlÃ¼k kaydÄ± iÃ§in logger
+        private readonly IPostService _postService; // Post servislerini kullanmak iÃ§in
 
-        // HomeController yapýcýsý: logger ve post servisini enjekte eder
+        // HomeController yapÄ±cÄ±sÄ±: logger ve post servisini enjekte eder
         public HomeController(ILogger<HomeController> logger, IPostService postService)
         {
             _logger = logger;
             _postService = postService;
         }
 
-        // Ana sayfa isteðini karþýlayan GET metodu
+        // Ana sayfa isteÄŸini karÅŸÄ±layan GET metodu
         [HttpGet("")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] bool? isDeleteSucceeded)
         {
-            // Ýlk sayfa verilerini alýr
-            PostListModelViewModel posts = GetDataForPage(1);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            // Görünüme post verilerini gönderir
+            if (isDeleteSucceeded ?? false)
+            {
+                ViewBag.IsDeleteSucceeded = true;
+            }
+
+            PostListModelViewModel posts = GetDataForPage(1);
             return View(posts);
         }
 
-        // Belirli bir sayfa isteðini karþýlayan GET metodu
+        // Belirli bir sayfa isteÄŸini karÅŸÄ±layan GET metodu
         [HttpGet("page/{pageIndex:int}")]
         public IActionResult Page(int pageIndex)
         {
             // Model durumunu kontrol eder
             if (!ModelState.IsValid)
             {
-                // Model geçersizse 400 Bad Request döner
+                // Model geÃ§ersizse 400 Bad Request dÃ¶ner
                 return BadRequest(ModelState);
             }
 
-            // Ýstenen sayfanýn verilerini alýr
+            // Ä°stenen sayfanÄ±n verilerini alÄ±r
             PostListModelViewModel posts = GetDataForPage(pageIndex);
 
-            // Görünüme post verilerini gönderir
+            // GÃ¶rÃ¼nÃ¼me post verilerini gÃ¶nderir
             return View(posts);
         }
 
-        // Belirli bir sayfanýn verilerini almak için yardýmcý metot
+        // Belirli bir sayfanÄ±n verilerini almak iÃ§in yardÄ±mcÄ± metot
         private PostListModelViewModel GetDataForPage(int pageIndex)
         {
-            // Tüm postlarý alýr
+            // TÃ¼m postlarÄ± alÄ±r
             var posts = _postService.GetAll();
 
-            // Post listesi modelini baþlatýr
+            // Post listesi modelini baÅŸlatÄ±r
             var result = new PostListModelViewModel
             {
                 PageIndex = pageIndex,
-                PageSize = 3, // Sayfa baþýna 3 post gösterilir
+                PageSize = 3, // Sayfa baÅŸÄ±na 3 post gÃ¶sterilir
                 PostCount = 0,
                 PagePosts = new List<PostListViewModel>()
             };
 
-            // Eðer hiç post yoksa boþ sonuç döner
+            // EÄŸer hiÃ§ post yoksa boÅŸ sonuÃ§ dÃ¶ner
             if (posts.Count == 0)
             {
                 return result;
             }
 
-            // Toplam post sayýsýný ayarlar
+            // Toplam post sayÄ±sÄ±nÄ± ayarlar
             result.PostCount = posts.Count;
 
-            // Ýstenen sayfanýn toplam sayfa sayýsýný aþýp aþmadýðýný kontrol eder
+            // Ä°stenen sayfanÄ±n toplam sayfa sayÄ±sÄ±nÄ± aÅŸÄ±p aÅŸmadÄ±ÄŸÄ±nÄ± kontrol eder
             if (result.PageIndex > result.TotalPageCount
                 && (result.PageIndex * result.PageSize) > result.PostCount)
             {
-                // Aþýyorsa son sayfaya ayarlar
+                // AÅŸÄ±yorsa son sayfaya ayarlar
                 result.PageIndex = result.TotalPageCount;
             }
 
-            // Eðer toplam post sayýsý sayfa boyutundan fazlaysa, ilgili sayfanýn postlarýný alýr
+            // EÄŸer toplam post sayÄ±sÄ± sayfa boyutundan fazlaysa, ilgili sayfanÄ±n postlarÄ±nÄ± alÄ±r
             if (result.PostCount >= result.PageSize)
             {
                 posts = posts
-                    .Skip((result.PageIndex - 1) * result.PageSize) // Ýlgili sayfaya kadar atlar
-                    .Take(result.PageSize) // Sayfa baþýna belirlenen sayýda post alýr
+                    .Skip((result.PageIndex - 1) * result.PageSize) // Ä°lgili sayfaya kadar atlar
+                    .Take(result.PageSize) // Sayfa baÅŸÄ±na belirlenen sayÄ±da post alÄ±r
                     .ToList();
             }
 
-            // Postlarý DTO nesnelerine dönüþtürür
+            // PostlarÄ± DTO nesnelerine dÃ¶nÃ¼ÅŸtÃ¼rÃ¼r
             result.PagePosts = posts
                 .ConvertAll(x => new PostListViewModel
                 {
@@ -100,21 +107,21 @@ namespace AspNetCoreBlog.Controllers
                     PublishDateTime = x.PublishDateTime
                 });
 
-            // Sonuç modelini döner
+            // SonuÃ§ modelini dÃ¶ner
             return result;
         }
 
-        // Gizlilik politikasý sayfasýný dönen metot
+        // Gizlilik politikasÄ± sayfasÄ±nÄ± dÃ¶nen metot
         public IActionResult Privacy()
         {
             return View();
         }
 
-        // Hata sayfasýný dönen metot, önbelleðe alýnmaz
+        // Hata sayfasÄ±nÄ± dÃ¶nen metot, Ã¶nbelleÄŸe alÄ±nmaz
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            // Hata modelini oluþturur ve görünümü döner
+            // Hata modelini oluÅŸturur ve gÃ¶rÃ¼nÃ¼mÃ¼ dÃ¶ner
             return View(new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier

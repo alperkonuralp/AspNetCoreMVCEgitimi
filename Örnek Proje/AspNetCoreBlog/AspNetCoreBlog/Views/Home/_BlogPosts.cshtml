@@ -1,10 +1,18 @@
-﻿@model AspNetCoreBlog.Models.PostListModelViewModel
-
+@model AspNetCoreBlog.Models.PostListModelViewModel
+<div class="d-none">
+    <form id="deleteForm" asp-action="Delete" asp-controller="Post" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="id" />
+    </form>
+</div>
 <div class="blog-posts">
     @foreach (var item in Model.PagePosts)
     {
         <div class="blog-post">
-            <h2>@item.Title <a asp-action="Index" asp-controller="PostEdit" asp-route-id="@item.Id"><i class="bi bi-pen"></i></a></h2>
+            <h2>
+                @item.Title
+                <a asp-action="Index" asp-controller="PostEdit" asp-route-id="@item.Id"><i class="bi bi-pen"></i></a>
+                <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Id" onclick="return deleteItem(@item.Id, '@item.Title')"><i class="bi bi-trash"></i></a>
+            </h2>
             <p>@item.Summary</p>
             <div>
                 Yazan: @item.Author -
@@ -28,3 +36,4 @@
         </nav>
     }
 </div>
+

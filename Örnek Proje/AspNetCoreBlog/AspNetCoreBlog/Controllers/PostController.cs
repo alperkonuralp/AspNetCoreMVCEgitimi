@@ -1,4 +1,4 @@
-﻿using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
+using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
 using AspNetCoreBlog.Services; // Blog servislerini kullanmak için
 using Markdig; // Markdown içeriğini HTML'e dönüştürmek için
 using Markdig.SyntaxHighlighting;
@@ -60,6 +60,21 @@ namespace AspNetCoreBlog.Controllers
                 Author = post.Author, // Postun yazarı
                 PublishDateTime = post.PublishDateTime // Yayınlanma tarihi ve saati
             });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Post silme işlemini gerçekleştirir
+            var result = await _postService.DeleteAsync(id);
+
+            // Post silme işlemi başarılıysa, 200 OK döner
+            return RedirectToAction("Index", "Home", new { isDeleteSucceeded = result });
         }
     }
 }

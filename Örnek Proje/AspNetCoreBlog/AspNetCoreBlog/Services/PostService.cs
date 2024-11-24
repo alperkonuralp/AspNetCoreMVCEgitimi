@@ -136,6 +136,17 @@ namespace AspNetCoreBlog.Services
             return Task.CompletedTask; // Görevi tamamlar
         }
 
+        public Task<bool> DeleteAsync(int id)
+        {
+            var post = _posts.Find(x => x.Id == id); // ID'ye göre gönderiyi bulur
+            if (post == null) // Gönderi bulunamazsa
+            {
+                return Task.FromResult(false); // Görevi başarısız olarak tamamlar
+            }
+            _posts.Remove(post); // Gönderiyi listeden kaldırır
+            return Task.FromResult(true); // Görevi başarılı olarak tamamlar
+        }
+
 
         // Tüm gönderileri yayınlanma tarihine göre azalan sırada döner
         public List<Post> GetAll()
