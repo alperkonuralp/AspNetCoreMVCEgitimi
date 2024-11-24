@@ -1,4 +1,4 @@
-﻿using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
+using AspNetCoreBlog.Models; // Blog uygulamasının modellerini kullanmak için
 using System.Globalization;
 
 namespace AspNetCoreBlog.Services
@@ -120,6 +120,22 @@ namespace AspNetCoreBlog.Services
             _posts.Add(post); // Yeni gönderiyi listeye ekler
             return Task.CompletedTask; // Görevi tamamlar
         }
+
+        public Task EditAsync(Post post)
+        {
+            var p = _posts.Find(x => x.Id == post.Id); // ID'ye göre gönderiyi bulur
+            if (object.ReferenceEquals(p, post)) // Gönderi referansları aynıysa
+            {
+                return Task.CompletedTask; // Görevi tamamlar
+            }
+            p.Title = post.Title; // Başlığı günceller
+            p.Summary = post.Summary; // Özeti günceller
+            p.Content = post.Content; // İçeriği günceller
+            p.Author = post.Author; // Yazarı günceller
+            p.PublishDateTime = post.PublishDateTime; // Yayınlanma tarihini günceller
+            return Task.CompletedTask; // Görevi tamamlar
+        }
+
 
         // Tüm gönderileri yayınlanma tarihine göre azalan sırada döner
         public List<Post> GetAll()

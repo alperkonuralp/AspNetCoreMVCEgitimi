@@ -1,4 +1,4 @@
-﻿using AspNetCoreBlog.Models;
+using AspNetCoreBlog.Models;
 using AspNetCoreBlog.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +39,7 @@ namespace AspNetCoreBlog.Controllers
 
             await _postService.CreateAsync(post);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "PostEdit", new { id = post.Id, isSuccess = true });
         }
     }
 }
