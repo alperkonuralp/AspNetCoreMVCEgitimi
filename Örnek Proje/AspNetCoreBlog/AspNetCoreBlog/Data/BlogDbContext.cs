@@ -10,11 +10,11 @@ namespace AspNetCoreBlog.Data
 
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new PostConfiguration());
         }
     }
 }

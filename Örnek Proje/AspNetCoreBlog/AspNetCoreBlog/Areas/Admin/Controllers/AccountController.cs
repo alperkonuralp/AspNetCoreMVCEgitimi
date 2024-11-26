@@ -1,18 +1,18 @@
 using AspNetCoreBlog.Areas.Admin.Models;
+using AspNetCoreBlog.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace AspNetCoreBlog.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<BlogUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<IdentityUser> signInManager, ILogger<AccountController> logger)
+        public AccountController(SignInManager<BlogUser> signInManager, ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -80,6 +80,13 @@ namespace AspNetCoreBlog.Areas.Admin.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("index", "home");
         }
     }
 }

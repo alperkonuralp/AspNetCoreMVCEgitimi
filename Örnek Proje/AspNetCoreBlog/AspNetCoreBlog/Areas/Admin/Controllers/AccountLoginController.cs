@@ -19,7 +19,6 @@ namespace AspNetCoreBlog.Areas.Admin.Controllers
             _logger = logger;
         }
 
-
         [HttpGet("Login")]
         public async Task<IActionResult> LoginAsync(string returnUrl = null)
         {

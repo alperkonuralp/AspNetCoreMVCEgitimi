@@ -40,7 +40,8 @@ namespace AspNetCoreBlog
                     // Diğer seçenekler...
                 })
                 .AddEntityFrameworkStores<BlogDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                ;
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
